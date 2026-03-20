@@ -235,7 +235,94 @@
       border-radius: 22px;
       padding: 18px;
     }
+function createCard(item) {
+  const card = document.createElement("article");
+  card.className = "card";
 
+  const isVocabulary = item.type === "Vocabulary" && item.definition;
+  const contentId = `content-${item.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+  if (isVocabulary) {
+    card.innerHTML = `
+      <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
+        <div class="card-top">
+          <div class="term">${item.term}</div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="tag">${item.category}</div>
+            <div class="accordion-icon">+</div>
+          </div>
+        </div>
+      </button>
+
+      <div class="accordion-content hidden" id="${contentId}">
+        <div class="field">
+          <div class="field-label">1. Definition</div>
+          <div class="field-value">${item.definition}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">2. Context</div>
+          <div class="field-value">${item.context}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">3. Connection</div>
+          <div class="field-value">${item.connection}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">4. Morphology</div>
+          <div class="field-value">${item.morphology}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">5. Semantic Chunking</div>
+          <div class="field-value">${item.chunk}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Spanish</div>
+          <div class="field-value">${item.spanish}</div>
+        </div>
+      </div>
+    `;
+
+    const btn = card.querySelector(".accordion-btn");
+    const content = card.querySelector(".accordion-content");
+    const icon = card.querySelector(".accordion-icon");
+
+    btn.addEventListener("click", () => {
+      const isOpen = !content.classList.contains("hidden");
+      content.classList.toggle("hidden");
+      btn.setAttribute("aria-expanded", String(!isOpen));
+      icon.textContent = isOpen ? "+" : "−";
+    });
+  } else {
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="term">${item.term}</div>
+        <div class="tag">${item.category}</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Meaning</div>
+        <div class="field-value">${item.meaning}</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Spanish</div>
+        <div class="field-value">${item.spanish}</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Example</div>
+        <div class="field-value">${item.example}</div>
+      </div>
+    `;
+  }
+
+  return card;
+}
     .card-top {
       display: flex;
       justify-content: space-between;
