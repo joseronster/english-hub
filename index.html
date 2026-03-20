@@ -483,55 +483,104 @@ function createCard(item) {
 
   <script>
     const entries = [
-      {
-        term: "Pivotal",
-        type: "Vocabulary",
-        meaning: "Very important; decisive.",
-        spanish: "Fundamental, decisivo",
-        example: "This meeting will be pivotal for the project.",
-        category: "CELPIP / Work"
-      },
-      {
-        term: "Daunting",
-        type: "Vocabulary",
-        meaning: "Difficult in a way that feels intimidating.",
-        spanish: "Desalentador, intimidante",
-        example: "At first, the report looked daunting.",
-        category: "Reading / CELPIP"
-      },
-      {
-        term: "Come across",
-        type: "Phrasal Verb",
-        meaning: "To seem or appear in a particular way; also to find by chance.",
-        spanish: "Parecer / encontrarse con",
-        example: "You came across as calm and professional.",
-        category: "Speaking / Work"
-      },
-      {
-        term: "Follow up",
-        type: "Phrasal Verb",
-        meaning: "To take further action after an earlier step.",
-        spanish: "Hacer seguimiento",
-        example: "I will follow up with the client tomorrow.",
-        category: "Email / Work"
-      },
-      {
-        term: "From our end",
-        type: "Expression",
-        meaning: "On our side; from our perspective or responsibility.",
-        spanish: "De nuestro lado",
-        example: "Everything is set on our end.",
-        category: "Business English"
-      },
-      {
-        term: "Look into",
-        type: "Phrasal Verb",
-        meaning: "To investigate or examine something.",
-        spanish: "Revisar, investigar",
-        example: "I will look into the discrepancy this afternoon.",
-        category: "Finance / Work"
-      }
-    ];
+  {
+    term: "Pivotal",
+    type: "Vocabulary",
+    meaning: "Of crucial importance in determining the outcome of something.",
+    spanish: "Fundamental, decisivo",
+    example: "The upcoming meeting will be pivotal in deciding whether we move forward with the project.",
+    category: "CELPIP High-Level",
+    definition: "Of crucial importance in determining the outcome of something.",
+    context: "The upcoming meeting will be pivotal in deciding whether we move forward with the project.",
+    connection: "Like a pivot point in basketball: everything turns around it.",
+    morphology: "pivot + al. 'Pivot' is a central turning point; '-al' means relating to.",
+    chunk: "pivotal decision / pivotal moment / pivotal role"
+  },
+  {
+    term: "Daunting",
+    type: "Vocabulary",
+    meaning: "Seeming difficult or intimidating to deal with.",
+    spanish: "Desalentador, intimidante",
+    example: "Taking on a leadership role in a new company can feel daunting at first.",
+    category: "CELPIP High-Level",
+    definition: "Seeming difficult or intimidating to deal with.",
+    context: "Taking on a leadership role in a new company can feel daunting at first.",
+    connection: "Think of something that makes you hesitate because it feels overwhelming.",
+    morphology: "daunt + ing. 'Daunt' means to intimidate or discourage.",
+    chunk: "daunting task / daunting challenge / feel daunting"
+  },
+  {
+    term: "Underlying",
+    type: "Vocabulary",
+    meaning: "Existing beneath the surface; fundamental.",
+    spanish: "Subyacente, de fondo",
+    example: "We need to understand the underlying issue before making a decision.",
+    category: "CELPIP High-Level",
+    definition: "Existing beneath the surface; basic or fundamental.",
+    context: "We need to understand the underlying issue before making a decision.",
+    connection: "Like the foundation of a building: you do not always see it, but it supports everything.",
+    morphology: "under + lie + ing. Something that lies under the surface.",
+    chunk: "underlying problem / underlying cause / underlying factors"
+  },
+  {
+    term: "Leverage",
+    type: "Vocabulary",
+    meaning: "To use something to maximum advantage.",
+    spanish: "Aprovechar estratégicamente",
+    example: "We can leverage our existing relationships to secure new projects.",
+    category: "CELPIP High-Level / Work",
+    definition: "To use something in a strategic way to gain the greatest possible advantage.",
+    context: "We can leverage our existing relationships to secure new projects.",
+    connection: "Like using a lever: a small force produces a bigger result.",
+    morphology: "From 'lever', a tool used to move something with mechanical advantage.",
+    chunk: "leverage experience / leverage resources / leverage relationships"
+  },
+  {
+    term: "Inevitable",
+    type: "Vocabulary",
+    meaning: "Certain to happen; unavoidable.",
+    spanish: "Inevitable, imposible de evitar",
+    example: "Delays were inevitable given the complexity of the project.",
+    category: "CELPIP High-Level",
+    definition: "Certain to happen and impossible to avoid.",
+    context: "Delays were inevitable given the complexity of the project.",
+    connection: "Think: this will happen no matter what.",
+    morphology: "in + evitable. 'Evitable' means avoidable; 'in-' makes it the opposite.",
+    chunk: "inevitable outcome / inevitable result / almost inevitable"
+  },
+  {
+    term: "Come across",
+    type: "PhrasalVerb",
+    meaning: "To seem or appear in a particular way; also to find by chance.",
+    spanish: "Parecer / encontrarse con",
+    example: "You came across as calm and professional.",
+    category: "Speaking / Work"
+  },
+  {
+    term: "Follow up",
+    type: "PhrasalVerb",
+    meaning: "To take further action after an earlier step.",
+    spanish: "Hacer seguimiento",
+    example: "I will follow up with the client tomorrow.",
+    category: "Email / Work"
+  },
+  {
+    term: "From our end",
+    type: "Expression",
+    meaning: "On our side; from our perspective or responsibility.",
+    spanish: "De nuestro lado",
+    example: "Everything is set on our end.",
+    category: "Business English"
+  },
+  {
+    term: "Look into",
+    type: "PhrasalVerb",
+    meaning: "To investigate or examine something.",
+    spanish: "Revisar, investigar",
+    example: "I will look into the discrepancy this afternoon.",
+    category: "Finance / Work"
+  }
+];
 
     const sections = ["Vocabulary", "Phrasal Verb", "Expression"];
     const searchInput = document.getElementById("searchInput");
