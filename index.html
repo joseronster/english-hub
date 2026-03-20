@@ -307,7 +307,19 @@
       color: var(--muted);
       font-size: 14px;
     }
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
 
+button:hover {
+  opacity: 0.9;
+}
     @media (max-width: 1024px) {
       .grid-2-1 { grid-template-columns: 1fr; }
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -386,7 +398,20 @@
       <div class="cards" id="cardsVocabulary"></div>
       <div class="empty-state hidden" id="emptyVocabulary">No matching vocabulary items.</div>
     </section>
+<section class="panel section">
+  <div class="section-head">
+    <div>
+      <h3>Writing Mode (CELPIP)</h3>
+      <p>Generate structured answers using advanced vocabulary.</p>
+    </div>
+  </div>
 
+  <div style="display:flex; gap:10px; margin-bottom:14px;">
+    <button onclick="generateAnswer()">Generate Answer</button>
+  </div>
+
+  <div id="writingOutput" class="field-value" style="white-space: pre-line;"></div>
+</section>
     <section class="panel section">
       <div class="section-head">
         <div>
@@ -511,7 +536,7 @@
         example: "I will look into the discrepancy this afternoon.",
         category: "Finance / Work"
       },
-      {
+{
   term: "Robust",
   type: "Vocabulary",
   meaning: "Strong and effective in all or most situations.",
@@ -731,7 +756,7 @@
   spanish: "Vale la pena destacar que",
   example: "It is worth noting that the costs have increased significantly.",
   category: "Formal Writing"
-}      
+}
     ];
 
     const sections = [
@@ -869,6 +894,48 @@
 
     searchInput.addEventListener("input", (e) => render(e.target.value));
     render();
+function randomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateAnswer() {
+
+  const opinions = [
+    "I strongly believe that this is the most effective approach.",
+    "From my perspective, this is the best option available.",
+    "It is clear to me that this approach offers the greatest benefits."
+  ];
+
+  const arguments = [
+    "One key reason is that it allows organizations to leverage their existing resources more efficiently.",
+    "This approach helps to mitigate potential risks while improving overall performance.",
+    "It enables teams to streamline their processes and enhance productivity."
+  ];
+
+  const supports = [
+    "For example, many companies have adopted similar strategies and achieved significant improvements.",
+    "In practice, this can lead to better decision-making and more consistent results.",
+    "As a result, organizations are better equipped to handle complex challenges."
+  ];
+
+  const conclusions = [
+    "Therefore, this option is arguably the most compelling solution.",
+    "For these reasons, this approach can be justified as the best course of action.",
+    "Overall, this is a well-founded and strategic decision."
+  ];
+
+  const answer = `
+${randomItem(opinions)}
+
+${randomItem(arguments)}
+
+${randomItem(supports)}
+
+${randomItem(conclusions)}
+  `;
+
+  document.getElementById("writingOutput").textContent = answer;
+}
   </script>
 </body>
 </html>
