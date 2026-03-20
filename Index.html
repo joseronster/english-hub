@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jose's English Hub</title>
+  <style>
+    :root {
+      --bg: #eef3f7;
+      --panel: rgba(255,255,255,0.88);
+      --panel-strong: #ffffff;
+      --text: #223244;
+      --muted: #5f7082;
+      --line: rgba(34,50,68,0.12);
+      --accent: #3d6ea8;
+      --accent-dark: #223244;
+      --soft: #f6f9fc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08)),
+        radial-gradient(circle at top left, #d4e0ea, #e5edf3 40%, #eef3f7 78%);
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(1200px, 94vw);
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+      backdrop-filter: blur(10px);
+      padding: 28px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 10px 0 0;
+      font-size: 44px;
+      line-height: 1.05;
+      color: var(--accent-dark);
+    }
+
+    .hero p {
+      margin: 14px 0 0;
+      max-width: 760px;
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+      gap: 12px;
+      min-width: 290px;
+    }
+
+    .stat {
+      border-radius: 20px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+    }
+
+    .stat.dark {
+      background: var(--accent-dark);
+      color: white;
+      border-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.8;
+      font-weight: 700;
+    }
+
+    .stat-value {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .grid-2-1 {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 24px;
+    }
+
+    .panel.dark {
+      background: var(--accent-dark);
+      color: white;
+      border-color: transparent;
+    }
+
+    .panel h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .panel-sub {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .panel.dark .panel-sub,
+    .panel.dark li {
+      color: rgba(255,255,255,0.86);
+    }
+
+    .chips {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .search-wrap {
+      margin-top: 18px;
+    }
+
+    .search-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      font-size: 15px;
+      color: var(--text);
+      background: rgba(255,255,255,0.9);
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: rgba(61,110,168,0.4);
+      box-shadow: 0 0 0 4px rgba(61,110,168,0.1);
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .section h3 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .section p {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .count {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--soft);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .term {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent-dark);
+      line-height: 1.15;
+    }
+
+    .tag {
+      background: #dde7f1;
+      color: #42596f;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .field {
+      margin-top: 14px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .field-value {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    .hidden { display: none; }
+
+    .empty-state {
+      background: rgba(255,255,255,0.82);
+      border: 1px dashed rgba(34,50,68,0.22);
+      border-radius: 18px;
+      padding: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      .grid-2-1 { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .container { width: min(94vw, 100%); }
+      h1 { font-size: 34px; }
+      .chips { grid-template-columns: 1fr; }
+      .cards { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; min-width: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow">Personal Study Website MVP</div>
+          <h1>Jose’s English Hub</h1>
+          <p>
+            A simple personal site to organize vocabulary, phrasal verbs, expressions,
+            and professional English notes in one place.
+          </p>
+        </div>
+        <div class="stats">
+          <div class="stat dark">
+            <div class="stat-label">Entries</div>
+            <div class="stat-value" id="entryCount">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Focus</div>
+            <div class="stat-value" style="font-size: 18px;">CELPIP + Work</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-2-1">
+      <div class="panel">
+        <h2>What this MVP already solves</h2>
+        <div class="chips">
+          <div class="chip">Keeps your English notes in one place</div>
+          <div class="chip">Separates words, phrasal verbs, and expressions</div>
+          <div class="chip">Shows meaning, Spanish, examples, and category</div>
+          <div class="chip">Can grow into flashcards, quizzes, and search later</div>
+        </div>
+      </div>
+      <div class="panel dark">
+        <h2>Next versions</h2>
+        <ul style="margin: 16px 0 0 18px; padding: 0; line-height: 1.8; font-size: 14px;">
+          <li>Search bar improvements</li>
+          <li>Filters by category</li>
+          <li>Favorites</li>
+          <li>Flashcards</li>
+          <li>Quiz mode</li>
+          <li>Your own examples</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel search-wrap">
+      <label class="search-label" for="searchInput">Search your words, expressions, or categories</label>
+      <input id="searchInput" class="search" type="text" placeholder="Try: pivotal, work, phrasal, CELPIP..." />
+    </section>
+
+    <section class="panel section" data-section="Vocabulary">
+      <div class="section-head">
+        <div>
+          <h3>Vocabulary</h3>
+          <p>Advanced words for CELPIP, reading, and professional communication.</p>
+        </div>
+        <div class="count" id="countVocabulary">0 items</div>
+      </div>
+      <div class="cards" id="cardsVocabulary"></div>
+      <div class="empty-state hidden" id="emptyVocabulary">No matching vocabulary items.</div>
+    </section>
+
+    <section class="panel section" data-section="Phrasal Verb">
+      <div class="section-head">
+        <div>
+          <h3>Phrasal Verbs</h3>
+          <p>Useful phrasal verbs for work, meetings, and everyday English.</p>
+        </div>
+        <div class="count" id="countPhrasal Verb">0 items</div>
+      </div>
+      <div class="cards" id="cardsPhrasal Verb"></div>
+      <div class="empty-state hidden" id="emptyPhrasal Verb">No matching phrasal verb items.</div>
+    </section>
+
+    <section class="panel section" data-section="Expression">
+      <div class="section-head">
+        <div>
+          <h3>Expressions</h3>
+          <p>Natural workplace expressions and polished email language.</p>
+        </div>
+        <div class="count" id="countExpression">0 items</div>
+      </div>
+      <div class="cards" id="cardsExpression"></div>
+      <div class="empty-state hidden" id="emptyExpression">No matching expression items.</div>
+    </section>
+  </div>
+
+  <script>
+    const entries = [
+      {
+        term: "Pivotal",
+        type: "Vocabulary",
+        meaning: "Very important; decisive.",
+        spanish: "Fundamental, decisivo",
+        example: "This meeting will be pivotal for the project.",
+        category: "CELPIP / Work"
+      },
+      {
+        term: "Daunting",
+        type: "Vocabulary",
+        meaning: "Difficult in a way that feels intimidating.",
+        spanish: "Desalentador, intimidante",
+        example: "At first, the report looked daunting.",
+        category: "Reading / CELPIP"
+      },
+      {
+        term: "Come across",
+        type: "Phrasal Verb",
+        meaning: "To seem or appear in a particular way; also to find by chance.",
+        spanish: "Parecer / encontrarse con",
+        example: "You came across as calm and professional.",
+        category: "Speaking / Work"
+      },
+      {
+        term: "Follow up",
+        type: "Phrasal Verb",
+        meaning: "To take further action after an earlier step.",
+        spanish: "Hacer seguimiento",
+        example: "I will follow up with the client tomorrow.",
+        category: "Email / Work"
+      },
+      {
+        term: "From our end",
+        type: "Expression",
+        meaning: "On our side; from our perspective or responsibility.",
+        spanish: "De nuestro lado",
+        example: "Everything is set on our end.",
+        category: "Business English"
+      },
+      {
+        term: "Look into",
+        type: "Phrasal Verb",
+        meaning: "To investigate or examine something.",
+        spanish: "Revisar, investigar",
+        example: "I will look into the discrepancy this afternoon.",
+        category: "Finance / Work"
+      }
+    ];
+
+    const sections = ["Vocabulary", "Phrasal Verb", "Expression"];
+    const searchInput = document.getElementById("searchInput");
+    const entryCount = document.getElementById("entryCount");
+
+    function createCard(item) {
+      const card = document.createElement("article");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="card-top">
+          <div class="term">${item.term}</div>
+          <div class="tag">${item.category}</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Meaning</div>
+          <div class="field-value">${item.meaning}</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Spanish</div>
+          <div class="field-value">${item.spanish}</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Example</div>
+          <div class="field-value">${item.example}</div>
+        </div>
+      `;
+      return card;
+    }
+
+    function render(filterText = "") {
+      const query = filterText.trim().toLowerCase();
+      entryCount.textContent = entries.length;
+
+      sections.forEach(section => {
+        const cardsEl = document.getElementById(`cards${section}`);
+        const countEl = document.getElementById(`count${section}`);
+        const emptyEl = document.getElementById(`empty${section}`);
+
+        cardsEl.innerHTML = "";
+
+        const filtered = entries.filter(item => {
+          const belongsToSection = item.type === section;
+          if (!belongsToSection) return false;
+          if (!query) return true;
+
+          const haystack = [
+            item.term,
+            item.type,
+            item.meaning,
+            item.spanish,
+            item.example,
+            item.category
+          ].join(" ").toLowerCase();
+
+          return haystack.includes(query);
+        });
+
+        countEl.textContent = `${filtered.length} item${filtered.length === 1 ? "" : "s"}`;
+
+        if (filtered.length === 0) {
+          emptyEl.classList.remove("hidden");
+        } else {
+          emptyEl.classList.add("hidden");
+          filtered.forEach(item => cardsEl.appendChild(createCard(item)));
+        }
+      });
+    }
+
+    searchInput.addEventListener("input", (e) => render(e.target.value));
+    render();
+  </script>
+</body>
+</html>
