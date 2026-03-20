@@ -136,14 +136,6 @@
       font-size: 24px;
     }
 
-    .panel-sub {
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .panel.dark .panel-sub,
     .panel.dark li {
       color: rgba(255,255,255,0.86);
     }
@@ -235,94 +227,31 @@
       border-radius: 22px;
       padding: 18px;
     }
-function createCard(item) {
-  const card = document.createElement("article");
-  card.className = "card";
 
-  const isVocabulary = item.type === "Vocabulary" && item.definition;
-  const contentId = `content-${item.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+    .accordion-btn {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+    }
 
-  if (isVocabulary) {
-    card.innerHTML = `
-      <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
-        <div class="card-top">
-          <div class="term">${item.term}</div>
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="tag">${item.category}</div>
-            <div class="accordion-icon">+</div>
-          </div>
-        </div>
-      </button>
+    .accordion-icon {
+      font-size: 20px;
+      line-height: 1;
+      color: var(--muted);
+      font-weight: 700;
+      margin-left: 8px;
+      flex-shrink: 0;
+    }
 
-      <div class="accordion-content hidden" id="${contentId}">
-        <div class="field">
-          <div class="field-label">1. Definition</div>
-          <div class="field-value">${item.definition}</div>
-        </div>
+    .accordion-content {
+      margin-top: 14px;
+      padding-top: 2px;
+    }
 
-        <div class="field">
-          <div class="field-label">2. Context</div>
-          <div class="field-value">${item.context}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">3. Connection</div>
-          <div class="field-value">${item.connection}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">4. Morphology</div>
-          <div class="field-value">${item.morphology}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">5. Semantic Chunking</div>
-          <div class="field-value">${item.chunk}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">Spanish</div>
-          <div class="field-value">${item.spanish}</div>
-        </div>
-      </div>
-    `;
-
-    const btn = card.querySelector(".accordion-btn");
-    const content = card.querySelector(".accordion-content");
-    const icon = card.querySelector(".accordion-icon");
-
-    btn.addEventListener("click", () => {
-      const isOpen = !content.classList.contains("hidden");
-      content.classList.toggle("hidden");
-      btn.setAttribute("aria-expanded", String(!isOpen));
-      icon.textContent = isOpen ? "+" : "−";
-    });
-  } else {
-    card.innerHTML = `
-      <div class="card-top">
-        <div class="term">${item.term}</div>
-        <div class="tag">${item.category}</div>
-      </div>
-
-      <div class="field">
-        <div class="field-label">Meaning</div>
-        <div class="field-value">${item.meaning}</div>
-      </div>
-
-      <div class="field">
-        <div class="field-label">Spanish</div>
-        <div class="field-value">${item.spanish}</div>
-      </div>
-
-      <div class="field">
-        <div class="field-label">Example</div>
-        <div class="field-value">${item.example}</div>
-      </div>
-    `;
-  }
-
-  return card;
-}
     .card-top {
       display: flex;
       justify-content: space-between;
@@ -366,7 +295,9 @@ function createCard(item) {
       color: var(--text);
     }
 
-    .hidden { display: none; }
+    .hidden {
+      display: none;
+    }
 
     .empty-state {
       background: rgba(255,255,255,0.82);
@@ -444,7 +375,7 @@ function createCard(item) {
       <input id="searchInput" class="search" type="text" placeholder="Try: pivotal, work, phrasal, CELPIP..." />
     </section>
 
-    <section class="panel section" data-section="Vocabulary">
+    <section class="panel section">
       <div class="section-head">
         <div>
           <h3>Vocabulary</h3>
@@ -456,19 +387,19 @@ function createCard(item) {
       <div class="empty-state hidden" id="emptyVocabulary">No matching vocabulary items.</div>
     </section>
 
-    <section class="panel section" data-section="Phrasal Verb">
+    <section class="panel section">
       <div class="section-head">
         <div>
           <h3>Phrasal Verbs</h3>
           <p>Useful phrasal verbs for work, meetings, and everyday English.</p>
         </div>
-        <div class="count" id="countPhrasal Verb">0 items</div>
+        <div class="count" id="countPhrasalVerb">0 items</div>
       </div>
-      <div class="cards" id="cardsPhrasal Verb"></div>
-      <div class="empty-state hidden" id="emptyPhrasal Verb">No matching phrasal verb items.</div>
+      <div class="cards" id="cardsPhrasalVerb"></div>
+      <div class="empty-state hidden" id="emptyPhrasalVerb">No matching phrasal verb items.</div>
     </section>
 
-    <section class="panel section" data-section="Expression">
+    <section class="panel section">
       <div class="section-head">
         <div>
           <h3>Expressions</h3>
@@ -483,197 +414,226 @@ function createCard(item) {
 
   <script>
     const entries = [
-  {
-    term: "Pivotal",
-    type: "Vocabulary",
-    meaning: "Of crucial importance in determining the outcome of something.",
-    spanish: "Fundamental, decisivo",
-    example: "The upcoming meeting will be pivotal in deciding whether we move forward with the project.",
-    category: "CELPIP High-Level",
-    definition: "Of crucial importance in determining the outcome of something.",
-    context: "The upcoming meeting will be pivotal in deciding whether we move forward with the project.",
-    connection: "Like a pivot point in basketball: everything turns around it.",
-    morphology: "pivot + al. 'Pivot' is a central turning point; '-al' means relating to.",
-    chunk: "pivotal decision / pivotal moment / pivotal role"
-  },
-  {
-    term: "Daunting",
-    type: "Vocabulary",
-    meaning: "Seeming difficult or intimidating to deal with.",
-    spanish: "Desalentador, intimidante",
-    example: "Taking on a leadership role in a new company can feel daunting at first.",
-    category: "CELPIP High-Level",
-    definition: "Seeming difficult or intimidating to deal with.",
-    context: "Taking on a leadership role in a new company can feel daunting at first.",
-    connection: "Think of something that makes you hesitate because it feels overwhelming.",
-    morphology: "daunt + ing. 'Daunt' means to intimidate or discourage.",
-    chunk: "daunting task / daunting challenge / feel daunting"
-  },
-  {
-    term: "Underlying",
-    type: "Vocabulary",
-    meaning: "Existing beneath the surface; fundamental.",
-    spanish: "Subyacente, de fondo",
-    example: "We need to understand the underlying issue before making a decision.",
-    category: "CELPIP High-Level",
-    definition: "Existing beneath the surface; basic or fundamental.",
-    context: "We need to understand the underlying issue before making a decision.",
-    connection: "Like the foundation of a building: you do not always see it, but it supports everything.",
-    morphology: "under + lie + ing. Something that lies under the surface.",
-    chunk: "underlying problem / underlying cause / underlying factors"
-  },
-  {
-    term: "Leverage",
-    type: "Vocabulary",
-    meaning: "To use something to maximum advantage.",
-    spanish: "Aprovechar estratégicamente",
-    example: "We can leverage our existing relationships to secure new projects.",
-    category: "CELPIP High-Level / Work",
-    definition: "To use something in a strategic way to gain the greatest possible advantage.",
-    context: "We can leverage our existing relationships to secure new projects.",
-    connection: "Like using a lever: a small force produces a bigger result.",
-    morphology: "From 'lever', a tool used to move something with mechanical advantage.",
-    chunk: "leverage experience / leverage resources / leverage relationships"
-  },
-  {
-    term: "Inevitable",
-    type: "Vocabulary",
-    meaning: "Certain to happen; unavoidable.",
-    spanish: "Inevitable, imposible de evitar",
-    example: "Delays were inevitable given the complexity of the project.",
-    category: "CELPIP High-Level",
-    definition: "Certain to happen and impossible to avoid.",
-    context: "Delays were inevitable given the complexity of the project.",
-    connection: "Think: this will happen no matter what.",
-    morphology: "in + evitable. 'Evitable' means avoidable; 'in-' makes it the opposite.",
-    chunk: "inevitable outcome / inevitable result / almost inevitable"
-  },
-  {
-    term: "Come across",
-    type: "PhrasalVerb",
-    meaning: "To seem or appear in a particular way; also to find by chance.",
-    spanish: "Parecer / encontrarse con",
-    example: "You came across as calm and professional.",
-    category: "Speaking / Work"
-  },
-  {
-    term: "Follow up",
-    type: "PhrasalVerb",
-    meaning: "To take further action after an earlier step.",
-    spanish: "Hacer seguimiento",
-    example: "I will follow up with the client tomorrow.",
-    category: "Email / Work"
-  },
-  {
-    term: "From our end",
-    type: "Expression",
-    meaning: "On our side; from our perspective or responsibility.",
-    spanish: "De nuestro lado",
-    example: "Everything is set on our end.",
-    category: "Business English"
-  },
-  {
-    term: "Look into",
-    type: "PhrasalVerb",
-    meaning: "To investigate or examine something.",
-    spanish: "Revisar, investigar",
-    example: "I will look into the discrepancy this afternoon.",
-    category: "Finance / Work"
-  }
-];
+      {
+        term: "Pivotal",
+        type: "Vocabulary",
+        meaning: "Of crucial importance in determining the outcome of something.",
+        spanish: "Fundamental, decisivo",
+        example: "The upcoming meeting will be pivotal in deciding whether we move forward with the project.",
+        category: "CELPIP High-Level",
+        definition: "Of crucial importance in determining the outcome of something.",
+        context: "The upcoming meeting will be pivotal in deciding whether we move forward with the project.",
+        connection: "Like a pivot point in basketball: everything turns around it.",
+        morphology: "pivot + al. 'Pivot' is a central turning point; '-al' means relating to.",
+        chunk: "pivotal decision / pivotal moment / pivotal role"
+      },
+      {
+        term: "Daunting",
+        type: "Vocabulary",
+        meaning: "Seeming difficult or intimidating to deal with.",
+        spanish: "Desalentador, intimidante",
+        example: "Taking on a leadership role in a new company can feel daunting at first.",
+        category: "CELPIP High-Level",
+        definition: "Seeming difficult or intimidating to deal with.",
+        context: "Taking on a leadership role in a new company can feel daunting at first.",
+        connection: "Think of something that makes you hesitate because it feels overwhelming.",
+        morphology: "daunt + ing. 'Daunt' means to intimidate or discourage.",
+        chunk: "daunting task / daunting challenge / feel daunting"
+      },
+      {
+        term: "Underlying",
+        type: "Vocabulary",
+        meaning: "Existing beneath the surface; fundamental.",
+        spanish: "Subyacente, de fondo",
+        example: "We need to understand the underlying issue before making a decision.",
+        category: "CELPIP High-Level",
+        definition: "Existing beneath the surface; basic or fundamental.",
+        context: "We need to understand the underlying issue before making a decision.",
+        connection: "Like the foundation of a building: you do not always see it, but it supports everything.",
+        morphology: "under + lie + ing. Something that lies under the surface.",
+        chunk: "underlying problem / underlying cause / underlying factors"
+      },
+      {
+        term: "Leverage",
+        type: "Vocabulary",
+        meaning: "To use something to maximum advantage.",
+        spanish: "Aprovechar estratégicamente",
+        example: "We can leverage our existing relationships to secure new projects.",
+        category: "CELPIP High-Level / Work",
+        definition: "To use something in a strategic way to gain the greatest possible advantage.",
+        context: "We can leverage our existing relationships to secure new projects.",
+        connection: "Like using a lever: a small force produces a bigger result.",
+        morphology: "From 'lever', a tool used to move something with mechanical advantage.",
+        chunk: "leverage experience / leverage resources / leverage relationships"
+      },
+      {
+        term: "Inevitable",
+        type: "Vocabulary",
+        meaning: "Certain to happen; unavoidable.",
+        spanish: "Inevitable, imposible de evitar",
+        example: "Delays were inevitable given the complexity of the project.",
+        category: "CELPIP High-Level",
+        definition: "Certain to happen and impossible to avoid.",
+        context: "Delays were inevitable given the complexity of the project.",
+        connection: "Think: this will happen no matter what.",
+        morphology: "in + evitable. 'Evitable' means avoidable; 'in-' makes it the opposite.",
+        chunk: "inevitable outcome / inevitable result / almost inevitable"
+      },
+      {
+        term: "Come across",
+        type: "PhrasalVerb",
+        meaning: "To seem or appear in a particular way; also to find by chance.",
+        spanish: "Parecer / encontrarse con",
+        example: "You came across as calm and professional.",
+        category: "Speaking / Work"
+      },
+      {
+        term: "Follow up",
+        type: "PhrasalVerb",
+        meaning: "To take further action after an earlier step.",
+        spanish: "Hacer seguimiento",
+        example: "I will follow up with the client tomorrow.",
+        category: "Email / Work"
+      },
+      {
+        term: "From our end",
+        type: "Expression",
+        meaning: "On our side; from our perspective or responsibility.",
+        spanish: "De nuestro lado",
+        example: "Everything is set on our end.",
+        category: "Business English"
+      },
+      {
+        term: "Look into",
+        type: "PhrasalVerb",
+        meaning: "To investigate or examine something.",
+        spanish: "Revisar, investigar",
+        example: "I will look into the discrepancy this afternoon.",
+        category: "Finance / Work"
+      }
+    ];
 
-    const sections = ["Vocabulary", "Phrasal Verb", "Expression"];
+    const sections = [
+      { key: "Vocabulary", label: "Vocabulary" },
+      { key: "PhrasalVerb", label: "Phrasal Verb" },
+      { key: "Expression", label: "Expression" }
+    ];
+
     const searchInput = document.getElementById("searchInput");
     const entryCount = document.getElementById("entryCount");
 
     function createCard(item) {
-  const card = document.createElement("article");
-  card.className = "card";
+      const card = document.createElement("article");
+      card.className = "card";
 
-  const isVocabulary = item.type === "Vocabulary" && item.definition;
-  const contentId = `content-${item.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+      const isVocabulary = item.type === "Vocabulary" && item.definition;
+      const contentId = `content-${item.term.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
-  if (isVocabulary) {
-    card.innerHTML = `
-      <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
-        <div class="card-top">
-          <div class="term">${item.term}</div>
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="tag">${item.category}</div>
-            <div class="accordion-icon">+</div>
+      if (isVocabulary) {
+        card.innerHTML = `
+          <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
+            <div class="card-top">
+              <div class="term">${item.term}</div>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="tag">${item.category}</div>
+                <div class="accordion-icon">+</div>
+              </div>
+            </div>
+          </button>
+          <div class="accordion-content hidden" id="${contentId}">
+            <div class="field">
+              <div class="field-label">1. Definition</div>
+              <div class="field-value">${item.definition}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">2. Context</div>
+              <div class="field-value">${item.context}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">3. Connection</div>
+              <div class="field-value">${item.connection}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">4. Morphology</div>
+              <div class="field-value">${item.morphology}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">5. Semantic Chunking</div>
+              <div class="field-value">${item.chunk}</div>
+            </div>
+            <div class="field">
+              <div class="field-label">Spanish</div>
+              <div class="field-value">${item.spanish}</div>
+            </div>
           </div>
-        </div>
-      </button>
+        `;
 
-      <div class="accordion-content hidden" id="${contentId}">
-        <div class="field">
-          <div class="field-label">1. Definition</div>
-          <div class="field-value">${item.definition}</div>
-        </div>
+        const btn = card.querySelector(".accordion-btn");
+        const content = card.querySelector(".accordion-content");
+        const icon = card.querySelector(".accordion-icon");
 
-        <div class="field">
-          <div class="field-label">2. Context</div>
-          <div class="field-value">${item.context}</div>
-        </div>
+        btn.addEventListener("click", () => {
+          const isOpen = !content.classList.contains("hidden");
+          content.classList.toggle("hidden");
+          btn.setAttribute("aria-expanded", String(!isOpen));
+          icon.textContent = isOpen ? "+" : "−";
+        });
+      } else {
+        card.innerHTML = `
+          <div class="card-top">
+            <div class="term">${item.term}</div>
+            <div class="tag">${item.category}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Meaning</div>
+            <div class="field-value">${item.meaning}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Spanish</div>
+            <div class="field-value">${item.spanish}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Example</div>
+            <div class="field-value">${item.example}</div>
+          </div>
+        `;
+      }
 
-        <div class="field">
-          <div class="field-label">3. Connection</div>
-          <div class="field-value">${item.connection}</div>
-        </div>
+      return card;
+    }
 
-        <div class="field">
-          <div class="field-label">4. Morphology</div>
-          <div class="field-value">${item.morphology}</div>
-        </div>
+    function render(filterText = "") {
+      const query = filterText.trim().toLowerCase();
+      entryCount.textContent = entries.length;
 
-        <div class="field">
-          <div class="field-label">5. Semantic Chunking</div>
-          <div class="field-value">${item.chunk}</div>
-        </div>
+      sections.forEach(section => {
+        const cardsEl = document.getElementById(`cards${section.key}`);
+        const countEl = document.getElementById(`count${section.key}`);
+        const emptyEl = document.getElementById(`empty${section.key}`);
 
-        <div class="field">
-          <div class="field-label">Spanish</div>
-          <div class="field-value">${item.spanish}</div>
-        </div>
-      </div>
-    `;
+        cardsEl.innerHTML = "";
 
-    const btn = card.querySelector(".accordion-btn");
-    const content = card.querySelector(".accordion-content");
-    const icon = card.querySelector(".accordion-icon");
+        const filtered = entries.filter(item => {
+          const belongsToSection = item.type === section.key;
+          if (!belongsToSection) return false;
+          if (!query) return true;
 
-    btn.addEventListener("click", () => {
-      const isOpen = !content.classList.contains("hidden");
-      content.classList.toggle("hidden");
-      btn.setAttribute("aria-expanded", String(!isOpen));
-      icon.textContent = isOpen ? "+" : "−";
-    });
-  } else {
-    card.innerHTML = `
-      <div class="card-top">
-        <div class="term">${item.term}</div>
-        <div class="tag">${item.category}</div>
-      </div>
+          const haystack = [
+            item.term,
+            section.label,
+            item.meaning || "",
+            item.spanish || "",
+            item.example || "",
+            item.category || "",
+            item.definition || "",
+            item.context || "",
+            item.connection || "",
+            item.morphology || "",
+            item.chunk || ""
+          ].join(" ").toLowerCase();
 
-      <div class="field">
-        <div class="field-label">Meaning</div>
-        <div class="field-value">${item.meaning}</div>
-      </div>
-
-      <div class="field">
-        <div class="field-label">Spanish</div>
-        <div class="field-value">${item.spanish}</div>
-      </div>
-
-      <div class="field">
-        <div class="field-label">Example</div>
-        <div class="field-value">${item.example}</div>
-      </div>
-    `;
-  }
-
-  return card;
-}
+          return haystack.includes(query);
+        });
 
         countEl.textContent = `${filtered.length} item${filtered.length === 1 ? "" : "s"}`;
 
