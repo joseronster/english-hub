@@ -756,6 +756,112 @@ button:hover {
   spanish: "Vale la pena destacar que",
   example: "It is worth noting that the costs have increased significantly.",
   category: "Formal Writing"
+},
+
+{
+  term: "Feasible",
+  type: "Vocabulary",
+  meaning: "Possible and practical to do.",
+  spanish: "Factible",
+  example: "This solution is not feasible given the current budget.",
+  category: "Work / Decision",
+  definition: "Capable of being done in a practical and realistic way.",
+  context: "This solution is not feasible given the current budget.",
+  connection: "Not just possible — realistic in real life.",
+  morphology: "from French 'faisable' → doable.",
+  chunk: "feasible option / financially feasible / not feasible"
+},
+{
+  term: "Viable",
+  type: "Vocabulary",
+  meaning: "Capable of working successfully.",
+  spanish: "Viable",
+  example: "We need to find a viable long-term solution.",
+  category: "Strategy",
+  definition: "Able to succeed or be sustained over time.",
+  context: "We need to find a viable long-term solution.",
+  connection: "Something that can survive and continue.",
+  morphology: "from Latin 'vita' → life.",
+  chunk: "viable solution / viable strategy / economically viable"
+},
+{
+  term: "Significant",
+  type: "Vocabulary",
+  meaning: "Important or meaningful.",
+  spanish: "Significativo, importante",
+  example: "This change had a significant impact on performance.",
+  category: "General / CELPIP",
+  definition: "Large or important enough to have an effect.",
+  context: "This change had a significant impact on performance.",
+  connection: "Not small — it actually matters.",
+  morphology: "sign + ficant → something that carries meaning.",
+  chunk: "significant impact / significant change / highly significant"
+},
+{
+  term: "Concern",
+  type: "Vocabulary",
+  meaning: "A feeling of worry or an issue to consider.",
+  spanish: "Preocupación, inquietud",
+  example: "One major concern is the lack of resources.",
+  category: "Meetings / CELPIP",
+  definition: "An issue that causes worry or needs attention.",
+  context: "One major concern is the lack of resources.",
+  connection: "Something that needs attention or resolution.",
+  morphology: "con + cern → related to something important.",
+  chunk: "raise a concern / major concern / address concerns"
+},
+{
+  term: "Impact",
+  type: "Vocabulary",
+  meaning: "A strong effect or influence.",
+  spanish: "Impacto",
+  example: "This decision will have a major impact on the project.",
+  category: "General / Work",
+  definition: "A strong effect on something.",
+  context: "This decision will have a major impact on the project.",
+  connection: "Like something hitting strongly.",
+  morphology: "from Latin 'impactus' → to push against.",
+  chunk: "have an impact / major impact / long-term impact"
+},
+{
+  term: "Take into account",
+  type: "PhrasalVerb",
+  meaning: "To consider something when making a decision.",
+  spanish: "Tomar en cuenta",
+  example: "We need to take into account the budget limitations.",
+  category: "Decision-making"
+},
+{
+  term: "Deal with",
+  type: "PhrasalVerb",
+  meaning: "To handle or manage a situation.",
+  spanish: "Lidiar con",
+  example: "We need to deal with this issue as soon as possible.",
+  category: "Work"
+},
+{
+  term: "In terms of",
+  type: "Expression",
+  meaning: "With regard to a specific aspect.",
+  spanish: "En términos de",
+  example: "In terms of cost, this option is more efficient.",
+  category: "CELPIP Writing"
+},
+{
+  term: "There is no doubt that",
+  type: "Expression",
+  meaning: "Used to express strong certainty.",
+  spanish: "No hay duda de que",
+  example: "There is no doubt that this approach is effective.",
+  category: "Formal Writing"
+},
+{
+  term: "A key factor is",
+  type: "Expression",
+  meaning: "Used to introduce an important reason.",
+  spanish: "Un factor clave es",
+  example: "A key factor is the availability of resources.",
+  category: "Argumentation"
 }
     ];
 
@@ -768,85 +874,101 @@ button:hover {
     const searchInput = document.getElementById("searchInput");
     const entryCount = document.getElementById("entryCount");
 
-    function createCard(item) {
-      const card = document.createElement("article");
-      card.className = "card";
+   function createCard(item) {
+  const card = document.createElement("article");
+  card.className = "card";
 
-      const isVocabulary = item.type === "Vocabulary" && item.definition;
-      const contentId = `content-${item.term.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  const contentId = `content-${item.term.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+  const isVocabulary = item.type === "Vocabulary" && item.definition;
 
-      if (isVocabulary) {
-        card.innerHTML = `
-          <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
-            <div class="card-top">
-              <div class="term">${item.term}</div>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <div class="tag">${item.category}</div>
-                <div class="accordion-icon">+</div>
-              </div>
-            </div>
-          </button>
-          <div class="accordion-content hidden" id="${contentId}">
-            <div class="field">
-              <div class="field-label">1. Definition</div>
-              <div class="field-value">${item.definition}</div>
-            </div>
-            <div class="field">
-              <div class="field-label">2. Context</div>
-              <div class="field-value">${item.context}</div>
-            </div>
-            <div class="field">
-              <div class="field-label">3. Connection</div>
-              <div class="field-value">${item.connection}</div>
-            </div>
-            <div class="field">
-              <div class="field-label">4. Morphology</div>
-              <div class="field-value">${item.morphology}</div>
-            </div>
-            <div class="field">
-              <div class="field-label">5. Semantic Chunking</div>
-              <div class="field-value">${item.chunk}</div>
-            </div>
-            <div class="field">
-              <div class="field-label">Spanish</div>
-              <div class="field-value">${item.spanish}</div>
-            </div>
-          </div>
-        `;
-
-        const btn = card.querySelector(".accordion-btn");
-        const content = card.querySelector(".accordion-content");
-        const icon = card.querySelector(".accordion-icon");
-
-        btn.addEventListener("click", () => {
-          const isOpen = !content.classList.contains("hidden");
-          content.classList.toggle("hidden");
-          btn.setAttribute("aria-expanded", String(!isOpen));
-          icon.textContent = isOpen ? "+" : "−";
-        });
-      } else {
-        card.innerHTML = `
-          <div class="card-top">
-            <div class="term">${item.term}</div>
+  if (isVocabulary) {
+    card.innerHTML = `
+      <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
+        <div class="card-top">
+          <div class="term">${item.term}</div>
+          <div style="display:flex; align-items:center; gap:10px;">
             <div class="tag">${item.category}</div>
+            <div class="accordion-icon">+</div>
           </div>
-          <div class="field">
-            <div class="field-label">Meaning</div>
-            <div class="field-value">${item.meaning}</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Spanish</div>
-            <div class="field-value">${item.spanish}</div>
-          </div>
-          <div class="field">
-            <div class="field-label">Example</div>
-            <div class="field-value">${item.example}</div>
-          </div>
-        `;
-      }
+        </div>
+      </button>
 
-      return card;
-    }
+      <div class="accordion-content hidden" id="${contentId}">
+        <div class="field">
+          <div class="field-label">1. Definition</div>
+          <div class="field-value">${item.definition}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">2. Context</div>
+          <div class="field-value">${item.context}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">3. Connection</div>
+          <div class="field-value">${item.connection}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">4. Morphology</div>
+          <div class="field-value">${item.morphology}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">5. Semantic Chunking</div>
+          <div class="field-value">${item.chunk}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Spanish</div>
+          <div class="field-value">${item.spanish}</div>
+        </div>
+      </div>
+    `;
+  } else {
+    card.innerHTML = `
+      <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
+        <div class="card-top">
+          <div class="term">${item.term}</div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="tag">${item.category}</div>
+            <div class="accordion-icon">+</div>
+          </div>
+        </div>
+      </button>
+
+      <div class="accordion-content hidden" id="${contentId}">
+        <div class="field">
+          <div class="field-label">Meaning</div>
+          <div class="field-value">${item.meaning}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Spanish</div>
+          <div class="field-value">${item.spanish}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Example</div>
+          <div class="field-value">${item.example}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  const btn = card.querySelector(".accordion-btn");
+  const content = card.querySelector(".accordion-content");
+  const icon = card.querySelector(".accordion-icon");
+
+  btn.addEventListener("click", () => {
+    const isOpen = !content.classList.contains("hidden");
+    content.classList.toggle("hidden");
+    btn.setAttribute("aria-expanded", String(!isOpen));
+    icon.textContent = isOpen ? "+" : "−";
+  });
+
+  return card;
+}
 
     function render(filterText = "") {
       const query = filterText.trim().toLowerCase();
@@ -901,27 +1023,31 @@ function randomItem(arr) {
 function generateAnswer() {
 
   const opinions = [
-    "I strongly believe that this is the most effective approach.",
-    "From my perspective, this is the best option available.",
-    "It is clear to me that this approach offers the greatest benefits."
+    "From my perspective, this is the most viable option available.",
+    "I strongly believe that this is a feasible and well-founded approach.",
+    "It is clear to me that this is arguably the most effective solution.",
+    "In my view, this approach is both practical and beneficial in the long term."
   ];
 
   const arguments = [
     "One key reason is that it allows organizations to leverage their existing resources more efficiently.",
-    "This approach helps to mitigate potential risks while improving overall performance.",
-    "It enables teams to streamline their processes and enhance productivity."
+    "Another compelling argument is that it helps to mitigate potential risks before they become more serious.",
+    "A key factor is that it provides a more robust and sustainable framework for decision-making.",
+    "This approach is particularly effective because it addresses the underlying issue rather than just the symptoms."
   ];
 
   const supports = [
-    "For example, many companies have adopted similar strategies and achieved significant improvements.",
-    "In practice, this can lead to better decision-making and more consistent results.",
-    "As a result, organizations are better equipped to handle complex challenges."
+    "For example, many organizations have adopted similar strategies and achieved significant improvements in performance.",
+    "In practice, this can enhance productivity while also reducing unnecessary delays and confusion.",
+    "If we assess the situation carefully, it becomes clear that this option offers more long-term value.",
+    "This is especially important when we take into account limited resources and growing expectations."
   ];
 
   const conclusions = [
-    "Therefore, this option is arguably the most compelling solution.",
-    "For these reasons, this approach can be justified as the best course of action.",
-    "Overall, this is a well-founded and strategic decision."
+    "Therefore, this option can be justified as the most practical and strategic course of action.",
+    "For these reasons, this is arguably the most compelling solution at this stage.",
+    "Overall, I believe this is a sound decision that can lead to meaningful and lasting benefits.",
+    "In conclusion, this approach is not only viable, but also highly effective in the current context."
   ];
 
   const answer = `
@@ -934,7 +1060,7 @@ ${randomItem(supports)}
 ${randomItem(conclusions)}
   `;
 
-  document.getElementById("writingOutput").textContent = answer;
+  document.getElementById("writingOutput").textContent = answer.trim();
 }
   </script>
 </body>
