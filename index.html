@@ -905,7 +905,52 @@ button:hover {
   scenario: "You are referring to something or someone that appears unexpectedly or is found after being missing.",
   prompt: "The invoice turned up in my inbox later than expected.",
   tone: "Neutral / Everyday"
-}
+},
+{
+    "term": "Bring up",
+    "type": "PhrasalVerb",
+    "meaning": "To mention a topic or start a discussion about something.",
+    "spanish": "Mencionar / sacar un tema",
+    "example": "I didn't want to bring up the budget during the lunch break.",
+    "category": "Work / Social",
+    "scenario": "You want to introduce a specific point during a meeting or conversation.",
+    "prompt": "I’ll bring up the new project timeline during our sync tomorrow.",
+    "tone": "Professional"
+  },
+  {
+    "term": "Call off",
+    "type": "PhrasalVerb",
+    "meaning": "To cancel something that was planned.",
+    "spanish": "Cancelar",
+    "example": "They had to call off the outdoor event because of the rain in Vancouver.",
+    "category": "Daily Life / Work",
+    "scenario": "A meeting or social gathering is no longer happening.",
+    "prompt": "We had to call off the hike due to the weather.",
+    "tone": "Neutral"
+  },
+  {
+    "term": "Carry on",
+    "type": "PhrasalVerb",
+    "meaning": "To continue doing something.",
+    "spanish": "Continuar / seguir adelante",
+    "example": "Please carry on with your work; don't let me interrupt you.",
+    "category": "Work",
+    "scenario": "Telling someone to keep doing what they were doing before an interruption.",
+    "prompt": "Let's carry on with the presentation where we left off.",
+    "tone": "Professional"
+  },
+  {
+    "term": "Come across",
+    "type": "PhrasalVerb",
+    "meaning": "To find something by chance; or the impression someone gives.",
+    "spanish": "Encontrarse con algo por casualidad / dar una impresión",
+    "example": "I came across some great reclaimed wood in Burnaby yesterday.",
+    "category": "Daily Life / Social",
+    "scenario": "You found a useful resource or noticed how someone behaved in a meeting.",
+    "prompt": "He comes across as very knowledgeable about the local market.",
+    "tone": "Neutral"
+  },
+
     ];
 
     const sections = [
@@ -922,68 +967,50 @@ button:hover {
   card.className = "card";
 
   const contentId = `content-${item.term.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-  const isVocabulary = item.type === "Vocabulary" && item.definition;
+  const isVocabulary = item.type === "Vocabulary";
 
-  if (isVocabulary) {
-    card.innerHTML = `
-  <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
-    <div class="card-top">
-      <div class="term">${item.term}</div>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <div class="tag">${item.category}</div>
-        <div class="accordion-icon">+</div>
-      </div>
-    </div>
-  </button>
-
-  <div class="accordion-content hidden" id="${contentId}">
-    <div class="field">
-      <div class="field-label">Meaning</div>
-      <div class="field-value">${item.meaning}</div>
-    </div>
-
-    <div class="field">
-      <div class="field-label">Spanish</div>
-      <div class="field-value">${item.spanish}</div>
-    </div>
-
-    <div class="field">
-      <div class="field-label">Example</div>
-      <div class="field-value">${item.example}</div>
-    </div>
-
-    ${item.scenario ? `
-    <div class="field">
-      <div class="field-label">Real-life scenario</div>
-      <div class="field-value">${item.scenario}</div>
-    </div>` : ""}
-
-    ${item.prompt ? `
-    <div class="field">
-      <div class="field-label">Speaking prompt</div>
-      <div class="field-value">${item.prompt}</div>
-    </div>` : ""}
-
-    ${item.tone ? `
-    <div class="field">
-      <div class="field-label">Tone</div>
-      <div class="field-value">${item.tone}</div>
-    </div>` : ""}
-  </div>
-`;
-  } else {
-    card.innerHTML = `
-      <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
-        <div class="card-top">
-          <div class="term">${item.term}</div>
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="tag">${item.category}</div>
-            <div class="accordion-icon">+</div>
-          </div>
+  card.innerHTML = `
+    <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
+      <div class="card-top">
+        <div class="term">${item.term}</div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="tag">${item.category}</div>
+          <div class="accordion-icon">+</div>
         </div>
-      </button>
+      </div>
+    </button>
 
-      <div class="accordion-content hidden" id="${contentId}">
+    <div class="accordion-content hidden" id="${contentId}">
+
+      ${
+        isVocabulary
+          ? `
+        <div class="field">
+          <div class="field-label">1. Definition</div>
+          <div class="field-value">${item.definition}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">2. Context</div>
+          <div class="field-value">${item.context}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">3. Connection</div>
+          <div class="field-value">${item.connection}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">4. Morphology</div>
+          <div class="field-value">${item.morphology}</div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">5. Semantic Chunking</div>
+          <div class="field-value">${item.chunk}</div>
+        </div>
+        `
+          : `
         <div class="field">
           <div class="field-label">Meaning</div>
           <div class="field-value">${item.meaning}</div>
@@ -998,9 +1025,41 @@ button:hover {
           <div class="field-label">Example</div>
           <div class="field-value">${item.example}</div>
         </div>
-      </div>
-    `;
-  }
+        `
+      }
+
+      ${
+        item.scenario
+          ? `
+      <div class="field">
+        <div class="field-label">Real-life scenario</div>
+        <div class="field-value">${item.scenario}</div>
+      </div>`
+          : ""
+      }
+
+      ${
+        item.prompt
+          ? `
+      <div class="field">
+        <div class="field-label">Speaking prompt</div>
+        <div class="field-value">${item.prompt}</div>
+      </div>`
+          : ""
+      }
+
+      ${
+        item.tone
+          ? `
+      <div class="field">
+        <div class="field-label">Tone</div>
+        <div class="field-value">${item.tone}</div>
+      </div>`
+          : ""
+      }
+
+    </div>
+  `;
 
   const btn = card.querySelector(".accordion-btn");
   const content = card.querySelector(".accordion-content");
@@ -1014,6 +1073,7 @@ button:hover {
   });
 
   return card;
+}
 }
 
     function render(filterText = "") {
