@@ -2463,6 +2463,11 @@ button:hover {
       </div>`
           : ""
       }
+      ${item.upgrade ? `
+<div class="field">
+  <div class="field-label">Upgrade version</div>
+  <div class="field-value">${item.upgrade}</div>
+</div>` : ""}
 
       ${
         item.tone
