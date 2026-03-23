@@ -872,6 +872,39 @@ button:hover {
   category: "Email / Work",
   scenario: "After a meeting with a client",
   prompt: "I’ll follow up with you tomorrow after reviewing the details"
+},
+{
+  term: "Catch up",
+  type: "PhrasalVerb",
+  meaning: "To reach the same point as someone else, or to talk after some time apart.",
+  spanish: "Ponerse al día / conversar para ponerse al día",
+  example: "Let’s catch up sometime next week.",
+  category: "Daily Life / Work",
+  scenario: "You have not spoken to a coworker or friend in a while and want to reconnect.",
+  prompt: "Let’s catch up next week and go over where things stand.",
+  tone: "Friendly / Professional"
+},
+{
+  term: "Show up",
+  type: "PhrasalVerb",
+  meaning: "To arrive somewhere, especially when someone is expected.",
+  spanish: "Aparecer / llegar / presentarse",
+  example: "He showed up a few minutes late to the meeting.",
+  category: "Daily Life / Meetings",
+  scenario: "You are talking about attendance, punctuality, or whether someone came to an event or meeting.",
+  prompt: "He didn’t show up for the call, so we had to move forward without him.",
+  tone: "Neutral / Everyday / Workplace"
+},
+{
+  term: "Turn up",
+  type: "PhrasalVerb",
+  meaning: "To appear unexpectedly, or to be found after being lost; in some contexts, to arrive.",
+  spanish: "Aparecer / surgir / encontrarse",
+  example: "The missing document finally turned up this morning.",
+  category: "Daily Life / Work",
+  scenario: "You are referring to something or someone that appears unexpectedly or is found after being missing.",
+  prompt: "The invoice turned up in my inbox later than expected.",
+  tone: "Neutral / Everyday"
 }
     ];
 
@@ -893,48 +926,51 @@ button:hover {
 
   if (isVocabulary) {
     card.innerHTML = `
-      <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
-        <div class="card-top">
-          <div class="term">${item.term}</div>
-          <div style="display:flex; align-items:center; gap:10px;">
-            <div class="tag">${item.category}</div>
-            <div class="accordion-icon">+</div>
-          </div>
-        </div>
-      </button>
-
-      <div class="accordion-content hidden" id="${contentId}">
-        <div class="field">
-          <div class="field-label">1. Definition</div>
-          <div class="field-value">${item.definition}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">2. Context</div>
-          <div class="field-value">${item.context}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">3. Connection</div>
-          <div class="field-value">${item.connection}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">4. Morphology</div>
-          <div class="field-value">${item.morphology}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">5. Semantic Chunking</div>
-          <div class="field-value">${item.chunk}</div>
-        </div>
-
-        <div class="field">
-          <div class="field-label">Spanish</div>
-          <div class="field-value">${item.spanish}</div>
-        </div>
+  <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
+    <div class="card-top">
+      <div class="term">${item.term}</div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="tag">${item.category}</div>
+        <div class="accordion-icon">+</div>
       </div>
-    `;
+    </div>
+  </button>
+
+  <div class="accordion-content hidden" id="${contentId}">
+    <div class="field">
+      <div class="field-label">Meaning</div>
+      <div class="field-value">${item.meaning}</div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Spanish</div>
+      <div class="field-value">${item.spanish}</div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Example</div>
+      <div class="field-value">${item.example}</div>
+    </div>
+
+    ${item.scenario ? `
+    <div class="field">
+      <div class="field-label">Real-life scenario</div>
+      <div class="field-value">${item.scenario}</div>
+    </div>` : ""}
+
+    ${item.prompt ? `
+    <div class="field">
+      <div class="field-label">Speaking prompt</div>
+      <div class="field-value">${item.prompt}</div>
+    </div>` : ""}
+
+    ${item.tone ? `
+    <div class="field">
+      <div class="field-label">Tone</div>
+      <div class="field-value">${item.tone}</div>
+    </div>` : ""}
+  </div>
+`;
   } else {
     card.innerHTML = `
       <button class="accordion-btn" type="button" aria-expanded="false" aria-controls="${contentId}">
