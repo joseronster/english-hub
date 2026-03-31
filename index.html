@@ -416,6 +416,29 @@ button:hover {
 
   <div id="writingOutput" class="field-value" style="white-space: pre-line;"></div>
 </section>
+<section class="panel section" style="border-top: 4px solid var(--accent);">
+  <div class="section-head">
+    <div>
+      <h3>Email Engineering Lab</h3>
+      <p>Select a professional "Mission" to generate a high-level Canadian English draft.</p>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap: wrap;">
+    <select id="emailMission" style="padding: 10px; border-radius: 12px; border: 1px solid var(--line); flex-grow: 1;">
+      <option value="followUp">Follow-up on Missing Docs</option>
+      <option value="payroll">Payroll Authorization Notice</option>
+      <option value="contractDiscrepancy">Addressing Contract Discrepancies</option>
+      <option value="meetingInvite">Requesting a Project Sync</option>
+      <option value="statusUpdate">Weekly Financial Portfolio Update</option>
+    </select>
+    <button onclick="generateEmail()">Deploy Email</button>
+  </div>
+
+  <div id="emailOutput" class="field-value" style="white-space: pre-line; background: var(--soft); padding: 20px; border-radius: 18px; border: 1px dashed var(--line); font-family: 'Courier New', Courier, monospace;">
+    Select a mission and click Deploy...
+  </div>
+</section>
     <section class="panel section">
       <div class="section-head">
         <div>
