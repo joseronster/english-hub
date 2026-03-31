@@ -2807,6 +2807,24 @@ button:hover {
   scenario: "Moving a physical control or directing someone to stop a car.",
   prompt: "Can you pull the truck over to the loading dock?",
   tone: "Neutral"
+},
+function generateEmail() {
+  const mission = document.getElementById("emailMission").value;
+  const output = document.getElementById("emailOutput");
+  
+  const drafts = {
+    followUp: `Subject: Following up on [Document Name] / Tenet Builders\n\nHi [Name],\n\nI’m just following up on the [Document Name] I requested earlier. We need this for our records to stay on track with the project timeline.\n\nCould you please send it over at your earliest convenience?\n\nBest regards,\nJose`,
+    
+    payroll: `Subject: Payroll Authorization - Documentation Required\n\nHi [Name],\n\nI am currently processing the payroll for this period. Keep in mind that per company policy, I need a [Doctor's Note/Form] to officially authorize these hours.\n\nOnce received, I'll go ahead and finalize the payment on my end.\n\nThanks,\nJose`,
+    
+    contractDiscrepancy: `Subject: Review of MERRF Project - Contract Discrepancy\n\nHi [Name],\n\nI’ve been looking into the latest invoices and noticed a slight discrepancy regarding the [Items]. From our end, it seems this wasn't included in the original scope.\n\nLet’s touch base soon to straighten this out before we proceed.\n\nBest,\nJose`,
+    
+    meetingInvite: `Subject: Request for Project Sync: [Project Name]\n\nHi [Name],\n\nI’d like to set up a quick sync to ensure we are all on the same page regarding the current budget allocation.\n\nAre you free for a brief call tomorrow morning to go over the details?\n\nBest regards,\nJose`,
+    
+    statusUpdate: `Subject: Weekly Financial Portfolio Update\n\nHi Matt,\n\nIn a nutshell, the portfolio is performing well. Most projects are on track, although I am currently mitigating a minor risk regarding [Project].\n\nI’ll keep you in the loop as soon as the final numbers turn up.\n\nCheers,\nJose`
+  };
+
+  output.textContent = drafts[mission];
 }
         
     ];
